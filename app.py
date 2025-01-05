@@ -250,7 +250,7 @@ with tab2:
     st.header("Coverage Map")
     
     # Load and cache the floor plan
-    default_map_path = "/home/mobisense/Desktop/coverage/maps/original.png"
+    default_map_path = "maps/original.png"
     image = load_and_process_image(default_map_path)
     width, height = image.size
     
