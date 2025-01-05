@@ -68,14 +68,6 @@
         "documentation": {}
     },
     {
-        "label": "ImageDraw",
-        "importPath": "PIL",
-        "description": "PIL",
-        "isExtraImport": true,
-        "detail": "PIL",
-        "documentation": {}
-    },
-    {
         "label": "Image",
         "importPath": "PIL",
         "description": "PIL",
@@ -152,11 +144,29 @@
         "documentation": {}
     },
     {
+        "label": "load_and_process_image",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def load_and_process_image(image_path):\n    \"\"\"Load and process the floor plan image\"\"\"\n    return Image.open(image_path)\n@st.cache_data\ndef calculate_rsrp_sa(d):\n    \"\"\"Vectorized RSRP calculation\"\"\"\n    ALPHA, F, PT = 2.9, 3.5e9, 30\n    C = 3e8\n    d = np.maximum(d, 1e-10)\n    return 10 * ALPHA * np.log10(C / (4 * np.pi * F * d)) + PT",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
         "label": "calculate_rsrp_sa",
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def calculate_rsrp_sa(d):\n    \"\"\"Calculate stochastic average RSRP using free space path loss model\n    Parameters:\n    d : float or numpy.ndarray\n        Distance in meters\n    Constants:\n    - α (path loss exponent) = 2.9\n    - f (frequency) = 3.5 GHz\n    - Pt (transmit power) = 30 dBm\n    \"\"\"",
+        "peekOfCode": "def calculate_rsrp_sa(d):\n    \"\"\"Vectorized RSRP calculation\"\"\"\n    ALPHA, F, PT = 2.9, 3.5e9, 30\n    C = 3e8\n    d = np.maximum(d, 1e-10)\n    return 10 * ALPHA * np.log10(C / (4 * np.pi * F * d)) + PT\n@st.cache_data\ndef calculate_coverage_map(width, height, gnb_x, gnb_y, meters_per_pixel_x, meters_per_pixel_y):\n    \"\"\"Vectorized coverage map calculation\"\"\"\n    x_pixels = np.arange(width)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_coverage_map",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def calculate_coverage_map(width, height, gnb_x, gnb_y, meters_per_pixel_x, meters_per_pixel_y):\n    \"\"\"Vectorized coverage map calculation\"\"\"\n    x_pixels = np.arange(width)\n    y_pixels = np.arange(height)\n    X_pixels, Y_pixels = np.meshgrid(x_pixels, y_pixels)\n    # Calculate distances in meters (vectorized)\n    distances = np.sqrt(\n        ((X_pixels - gnb_x) * meters_per_pixel_x)**2 + \n        ((Y_pixels - gnb_y) * meters_per_pixel_y)**2\n    )",
         "detail": "app",
         "documentation": {}
     },
@@ -165,7 +175,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def calculate_instantaneous_rsrp(d):\n    \"\"\"Calculate instantaneous RSRP with random variation\"\"\"\n    rsrp_sa = calculate_rsrp_sa(d)\n    v = np.random.uniform(-3, 1) * np.log10(d + 1e-10)\n    return rsrp_sa + v\ndef evolve_rsrp(initial_rsrp, steps):\n    \"\"\"Evolve RSRP over time\"\"\"\n    rsrp = [initial_rsrp]\n    for _ in range(steps - 1):\n        w = np.random.uniform(-1.5, 1.5)",
+        "peekOfCode": "def calculate_instantaneous_rsrp(d):\n    \"\"\"Calculate instantaneous RSRP with random variation\"\"\"\n    rsrp_sa = calculate_rsrp_sa(d)\n    v = np.random.uniform(-3, 1) * np.log10(d + 1e-10)\n    return rsrp_sa + v\ndef evolve_rsrp(initial_rsrp, steps):\n    \"\"\"Evolve RSRP over time\"\"\"\n    rsrp = np.zeros(steps)\n    rsrp[0] = initial_rsrp\n    w = np.random.uniform(-1.5, 1.5, size=steps-1)",
         "detail": "app",
         "documentation": {}
     },
@@ -174,7 +184,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def evolve_rsrp(initial_rsrp, steps):\n    \"\"\"Evolve RSRP over time\"\"\"\n    rsrp = [initial_rsrp]\n    for _ in range(steps - 1):\n        w = np.random.uniform(-1.5, 1.5)\n        rsrp.append(rsrp[-1] + w)\n    return np.array(rsrp)\n# def evolve_rsrp(initial_rsrp, steps):\n#     \"\"\"Evolve RSRP over time with mean reversion\n#     This implementation uses an Ornstein-Uhlenbeck-like process where values",
+        "peekOfCode": "def evolve_rsrp(initial_rsrp, steps):\n    \"\"\"Evolve RSRP over time\"\"\"\n    rsrp = np.zeros(steps)\n    rsrp[0] = initial_rsrp\n    w = np.random.uniform(-1.5, 1.5, size=steps-1)\n    rsrp[1:] = rsrp[0] + np.cumsum(w)\n    return rsrp\n@st.cache_data\ndef smooth_data(data, window_length=11, polyorder=3, method=\"moving average\"):\n    \"\"\"Smoothed data calculation with caching\"\"\"",
         "detail": "app",
         "documentation": {}
     },
@@ -183,7 +193,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def smooth_data(data, window_length=11, polyorder=3, method=\"moving average\"):\n    \"\"\"Smooth data using Savitzky-Golay filter\"\"\"\n    if method == \"moving average\":\n        return np.convolve(data, np.ones(window_length)/window_length, mode='valid')\n    if method == \"gaussian filter\":\n        return gaussian_filter1d(data, sigma=window_length)\n    if method == \"savgol filter\":\n        return signal.savgol_filter(data, window_length, polyorder)\n# Create tabs\ntab1, tab2 = st.tabs([\"RSRP Analysis\", \"Coverage Map\"])",
+        "peekOfCode": "def smooth_data(data, window_length=11, polyorder=3, method=\"moving average\"):\n    \"\"\"Smoothed data calculation with caching\"\"\"\n    if method == \"moving average\":\n        kernel = np.ones(window_length)/window_length\n        return np.convolve(data, kernel, mode='valid')\n    if method == \"gaussian filter\":\n        return gaussian_filter1d(data, sigma=window_length)\n    return signal.savgol_filter(data, window_length, polyorder)\n# Set page configuration\nst.set_page_config(layout=\"wide\", page_title=\"RSRP Analysis Dashboard\")",
         "detail": "app",
         "documentation": {}
     },
