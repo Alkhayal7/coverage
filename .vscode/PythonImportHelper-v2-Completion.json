@@ -1,0 +1,307 @@
+[
+    {
+        "label": "streamlit",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "streamlit",
+        "description": "streamlit",
+        "detail": "streamlit",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "plotly.graph_objects",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "plotly.graph_objects",
+        "description": "plotly.graph_objects",
+        "detail": "plotly.graph_objects",
+        "documentation": {}
+    },
+    {
+        "label": "make_subplots",
+        "importPath": "plotly.subplots",
+        "description": "plotly.subplots",
+        "isExtraImport": true,
+        "detail": "plotly.subplots",
+        "documentation": {}
+    },
+    {
+        "label": "scipy.signal",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "scipy.signal",
+        "description": "scipy.signal",
+        "detail": "scipy.signal",
+        "documentation": {}
+    },
+    {
+        "label": "savgol_filter",
+        "importPath": "scipy.signal",
+        "description": "scipy.signal",
+        "isExtraImport": true,
+        "detail": "scipy.signal",
+        "documentation": {}
+    },
+    {
+        "label": "gaussian_filter1d",
+        "importPath": "scipy.ndimage",
+        "description": "scipy.ndimage",
+        "isExtraImport": true,
+        "detail": "scipy.ndimage",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "ImageDraw",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "ImageDraw",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "io",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "io",
+        "description": "io",
+        "detail": "io",
+        "documentation": {}
+    },
+    {
+        "label": "math",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "math",
+        "description": "math",
+        "detail": "math",
+        "documentation": {}
+    },
+    {
+        "label": "matplotlib.pyplot",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "matplotlib.pyplot",
+        "description": "matplotlib.pyplot",
+        "detail": "matplotlib.pyplot",
+        "documentation": {}
+    },
+    {
+        "label": "Axes3D",
+        "importPath": "mpl_toolkits.mplot3d",
+        "description": "mpl_toolkits.mplot3d",
+        "isExtraImport": true,
+        "detail": "mpl_toolkits.mplot3d",
+        "documentation": {}
+    },
+    {
+        "label": "cv2",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "cv2",
+        "description": "cv2",
+        "detail": "cv2",
+        "documentation": {}
+    },
+    {
+        "label": "Rectangle",
+        "importPath": "matplotlib.patches",
+        "description": "matplotlib.patches",
+        "isExtraImport": true,
+        "detail": "matplotlib.patches",
+        "documentation": {}
+    },
+    {
+        "label": "Circle",
+        "importPath": "matplotlib.patches",
+        "description": "matplotlib.patches",
+        "isExtraImport": true,
+        "detail": "matplotlib.patches",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_rsrp_sa",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def calculate_rsrp_sa(d):\n    \"\"\"Calculate stochastic average RSRP using free space path loss model\n    Parameters:\n    d : float or numpy.ndarray\n        Distance in meters\n    Constants:\n    - α (path loss exponent) = 2.9\n    - f (frequency) = 3.5 GHz\n    - Pt (transmit power) = 30 dBm\n    \"\"\"",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_instantaneous_rsrp",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def calculate_instantaneous_rsrp(d):\n    \"\"\"Calculate instantaneous RSRP with random variation\"\"\"\n    rsrp_sa = calculate_rsrp_sa(d)\n    v = np.random.uniform(-3, 1) * np.log10(d + 1e-10)\n    return rsrp_sa + v\ndef evolve_rsrp(initial_rsrp, steps):\n    \"\"\"Evolve RSRP over time\"\"\"\n    rsrp = [initial_rsrp]\n    for _ in range(steps - 1):\n        w = np.random.uniform(-1.5, 1.5)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "evolve_rsrp",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def evolve_rsrp(initial_rsrp, steps):\n    \"\"\"Evolve RSRP over time\"\"\"\n    rsrp = [initial_rsrp]\n    for _ in range(steps - 1):\n        w = np.random.uniform(-1.5, 1.5)\n        rsrp.append(rsrp[-1] + w)\n    return np.array(rsrp)\n# def evolve_rsrp(initial_rsrp, steps):\n#     \"\"\"Evolve RSRP over time with mean reversion\n#     This implementation uses an Ornstein-Uhlenbeck-like process where values",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "smooth_data",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def smooth_data(data, window_length=11, polyorder=3, method=\"moving average\"):\n    \"\"\"Smooth data using Savitzky-Golay filter\"\"\"\n    if method == \"moving average\":\n        return np.convolve(data, np.ones(window_length)/window_length, mode='valid')\n    if method == \"gaussian filter\":\n        return gaussian_filter1d(data, sigma=window_length)\n    if method == \"savgol filter\":\n        return signal.savgol_filter(data, window_length, polyorder)\n# Create tabs\ntab1, tab2 = st.tabs([\"RSRP Analysis\", \"Coverage Map\"])",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_rsrp",
+        "kind": 2,
+        "importPath": "app2",
+        "description": "app2",
+        "peekOfCode": "def calculate_rsrp(d: float) -> float:\n    \"\"\"\n    Calculate the Stochastic Average (SA) RSRP at distance d:\n    RSRP_SA(d) = 33 * ( -2.166 - log10(d) ).\n    \"\"\"\n    if d <= 0:\n        return None\n    return 33 * (-2.166 - np.log10(d))\ndef calculate_instantaneous_rsrp(d: float) -> float:\n    \"\"\"",
+        "detail": "app2",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_instantaneous_rsrp",
+        "kind": 2,
+        "importPath": "app2",
+        "description": "app2",
+        "peekOfCode": "def calculate_instantaneous_rsrp(d: float) -> float:\n    \"\"\"\n    Instantaneous RSRP at t=0, adding a stochastic term:\n    RSRP(d,t_0) = RSRP_SA(d) + v,\n    where v ~ Uniform([-3, 1]) * log10(d).\n    \"\"\"\n    rsrp_sa = calculate_rsrp(d)\n    if rsrp_sa is None:\n        return None\n    v = np.random.uniform(-3, 1) * np.log10(d)",
+        "detail": "app2",
+        "documentation": {}
+    },
+    {
+        "label": "evolve_rsrp_over_time",
+        "kind": 2,
+        "importPath": "app2",
+        "description": "app2",
+        "peekOfCode": "def evolve_rsrp_over_time(d: float, steps: int) -> np.ndarray:\n    \"\"\"\n    Temporal evolution of RSRP over 'steps' time instances:\n      RSRP(d, t_i) = RSRP(d, t_{i-1}) + w,\n    where w ~ Uniform([-1.5, 1.5]).\n    \"\"\"\n    rsrp_values = [calculate_instantaneous_rsrp(d)]\n    for _ in range(1, steps):\n        w = np.random.uniform(-1.5, 1.5)\n        rsrp_values.append(rsrp_values[-1] + w)",
+        "detail": "app2",
+        "documentation": {}
+    },
+    {
+        "label": "smooth_curve",
+        "kind": 2,
+        "importPath": "app2",
+        "description": "app2",
+        "peekOfCode": "def smooth_curve(data: np.ndarray, window: int = 21, poly: int = 3) -> np.ndarray:\n    \"\"\"\n    Smooth the RSRP curve using Savitzky-Golay filter.\n    Increase 'window' or 'poly' for stronger smoothing.\n    \"\"\"\n    if len(data) < window:\n        # If data is shorter than the smoothing window, just return the raw data\n        return data\n    return savgol_filter(data, window_length=window, polyorder=poly)\n# ----------------------------",
+        "detail": "app2",
+        "documentation": {}
+    },
+    {
+        "label": "rsrp_sa_coverage",
+        "kind": 2,
+        "importPath": "app2",
+        "description": "app2",
+        "peekOfCode": "def rsrp_sa_coverage(distance_m: float, random_variation: float = 0.0) -> float:\n    \"\"\"\n    Computes RSRP_SA(d) = 33 * (-2.166 - log10(d)) + v\n    distance_m: distance in meters\n    random_variation: optional small variation (v)\n    \"\"\"\n    if distance_m <= 0:\n        return np.nan\n    return 33 * (-2.166 - np.log10(distance_m)) + random_variation\ndef generate_polygon_mask(polygon_points, img_width, img_height):",
+        "detail": "app2",
+        "documentation": {}
+    },
+    {
+        "label": "generate_polygon_mask",
+        "kind": 2,
+        "importPath": "app2",
+        "description": "app2",
+        "peekOfCode": "def generate_polygon_mask(polygon_points, img_width, img_height):\n    \"\"\"\n    Create a boolean mask of the polygon area\n    where polygon_points = [(x1, y1), (x2, y2), ...].\n    \"\"\"\n    # Create a blank image for the mask\n    mask_img = Image.new(\"L\", (img_width, img_height), 0)\n    # Draw the polygon on the mask\n    ImageDraw.Draw(mask_img).polygon(polygon_points, outline=1, fill=1)\n    # Convert to NumPy array of booleans",
+        "detail": "app2",
+        "documentation": {}
+    },
+    {
+        "label": "point_in_polygon",
+        "kind": 2,
+        "importPath": "app2",
+        "description": "app2",
+        "peekOfCode": "def point_in_polygon(x, y, polygon_mask):\n    \"\"\"\n    Checks if point (x, y) is inside polygon_mask.\n    polygon_mask is assumed to be a 2D boolean array.\n    \"\"\"\n    h, w = polygon_mask.shape\n    if x < 0 or x >= w or y < 0 or y >= h:\n        return False\n    return polygon_mask[int(y), int(x)]\n# ----------------------------",
+        "detail": "app2",
+        "documentation": {}
+    },
+    {
+        "label": "tabs",
+        "kind": 5,
+        "importPath": "app2",
+        "description": "app2",
+        "peekOfCode": "tabs = st.tabs([\"RSRP Pipeline Visualization\", \"Coverage Map Plot\"])\n# ----------------------------\n# Tab 1: RSRP Pipeline Visualization\n# ----------------------------\nwith tabs[0]:\n    st.header(\"RSRP Pipeline Visualization\")\n    # ----------------------------\n    # SECTION A: RSRP vs Distance (2D Plot)\n    # ----------------------------\n    st.subheader(\"1. RSRP vs. Distance\")",
+        "detail": "app2",
+        "documentation": {}
+    },
+    {
+        "label": "load_floor_plan",
+        "kind": 2,
+        "importPath": "draw",
+        "description": "draw",
+        "peekOfCode": "def load_floor_plan(image_path):\n    img = cv2.imread(image_path)\n    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # Convert to RGB\n    return img\n# Draw zones interactively\ndef draw_zones(image):\n    fig, ax = plt.subplots(figsize=(10, 10))\n    ax.imshow(image)\n    # Remove grid, axes, and title\n    ax.set_axis_off()",
+        "detail": "draw",
+        "documentation": {}
+    },
+    {
+        "label": "draw_zones",
+        "kind": 2,
+        "importPath": "draw",
+        "description": "draw",
+        "peekOfCode": "def draw_zones(image):\n    fig, ax = plt.subplots(figsize=(10, 10))\n    ax.imshow(image)\n    # Remove grid, axes, and title\n    ax.set_axis_off()\n    plt.subplots_adjust(top=1, bottom=0, right=1, left=0, hspace=0, wspace=0)\n    plt.margins(0,0)\n    zones = []\n    rect = None\n    start_point = None",
+        "detail": "draw",
+        "documentation": {}
+    },
+    {
+        "label": "image_path",
+        "kind": 5,
+        "importPath": "draw",
+        "description": "draw",
+        "peekOfCode": "image_path = 'maps/refinery_floorplan.jpg'\nfloor_plan = load_floor_plan(image_path)\nzones = draw_zones(floor_plan)\n# Output zone details\nfor zone, color, shape in zones:\n    if shape == 'rectangle':\n        print(f\"Rectangle - x={zone.get_x()}, y={zone.get_y()}, w={zone.get_width()}, h={zone.get_height()}, color={color}\")\n    elif shape == 'circle':\n        print(f\"Circle - x={zone.center[0]}, y={zone.center[1]}, radius={zone.radius}, color={color}\")",
+        "detail": "draw",
+        "documentation": {}
+    },
+    {
+        "label": "floor_plan",
+        "kind": 5,
+        "importPath": "draw",
+        "description": "draw",
+        "peekOfCode": "floor_plan = load_floor_plan(image_path)\nzones = draw_zones(floor_plan)\n# Output zone details\nfor zone, color, shape in zones:\n    if shape == 'rectangle':\n        print(f\"Rectangle - x={zone.get_x()}, y={zone.get_y()}, w={zone.get_width()}, h={zone.get_height()}, color={color}\")\n    elif shape == 'circle':\n        print(f\"Circle - x={zone.center[0]}, y={zone.center[1]}, radius={zone.radius}, color={color}\")",
+        "detail": "draw",
+        "documentation": {}
+    },
+    {
+        "label": "zones",
+        "kind": 5,
+        "importPath": "draw",
+        "description": "draw",
+        "peekOfCode": "zones = draw_zones(floor_plan)\n# Output zone details\nfor zone, color, shape in zones:\n    if shape == 'rectangle':\n        print(f\"Rectangle - x={zone.get_x()}, y={zone.get_y()}, w={zone.get_width()}, h={zone.get_height()}, color={color}\")\n    elif shape == 'circle':\n        print(f\"Circle - x={zone.center[0]}, y={zone.center[1]}, radius={zone.radius}, color={color}\")",
+        "detail": "draw",
+        "documentation": {}
+    }
+]

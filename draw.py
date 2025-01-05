@@ -9,11 +9,15 @@ def load_floor_plan(image_path):
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # Convert to RGB
     return img
 
-# Draw rectangles and circles interactively
+# Draw zones interactively
 def draw_zones(image):
     fig, ax = plt.subplots(figsize=(10, 10))
     ax.imshow(image)
-    ax.set_title('Draw Zones | LMB: Green (Rect), RMB: Red (Rect), MMB: Blue (Circle)')
+    
+    # Remove grid, axes, and title
+    ax.set_axis_off()
+    plt.subplots_adjust(top=1, bottom=0, right=1, left=0, hspace=0, wspace=0)
+    plt.margins(0,0)
 
     zones = []
     rect = None
@@ -67,10 +71,20 @@ def draw_zones(image):
         start_point = None
         plt.draw()
 
+    # Keyboard event handler for saving
+    def on_key(event):
+        if event.key == 's':
+            plt.savefig('annotated_floorplan.png', 
+                       bbox_inches='tight', 
+                       pad_inches=0,
+                       dpi=300)
+            print("Image saved as 'annotated_floorplan.png'")
+
     # Connect event handlers
     fig.canvas.mpl_connect('button_press_event', on_press)
     fig.canvas.mpl_connect('motion_notify_event', on_motion)
     fig.canvas.mpl_connect('button_release_event', on_release)
+    fig.canvas.mpl_connect('key_press_event', on_key)
 
     plt.show()
     return zones
